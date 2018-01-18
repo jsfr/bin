@@ -1,0 +1,28 @@
+#!/usr/bin/env osascript
+
+on run argv
+  tell application "Viscosity"
+
+    if (count of argv) < 1 then
+        return "Too few arguments"
+    end if
+
+
+    if (item 1 of argv) is "c" then
+        if (count of argv) < 2 then
+            connectall
+        else
+            connect (item 2 of argv)
+        end if
+    else if (item 1 of argv) is "d" then
+        if (count of argv) < 2 then
+            quit
+        else
+            disconnect (item 2 of argv)
+        end if
+    else
+        return "Unknown argument"
+    end if
+
+  end
+end
