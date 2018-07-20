@@ -1,8 +1,0 @@
-#!/usr/bin/env osascript
-
-on run argv
-    delay 0.2
-    tell application "System Events"
-        keystroke argv
-    end tell
-end
