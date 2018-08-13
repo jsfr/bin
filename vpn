@@ -12,6 +12,7 @@ on run argv
         if (count of argv) < 2 then
             connectall
         else
+            disconnectall
             connect (item 2 of argv)
         end if
     else if (item 1 of argv) is "d" then
