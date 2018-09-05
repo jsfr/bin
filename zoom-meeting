@@ -1,0 +1,75 @@
+#!/usr/bin/env osascript
+
+on run argv
+	# Set variables
+	set zoom to "zoom.us"
+	set wait to 0.25
+	set initialWindow to "Zoom - Free Account"
+	
+	# Tell Zoom to stop running if they're already open      
+	tell application zoom
+		if it is running then
+			quit
+			delay 1
+		end if
+	end tell
+	
+	# Launch Zoom.usþ
+	tell application zoom to activate
+	
+	# Wait for Zoom's create meeting window to open
+	tell application "System Events"
+		repeat until visible of process zoom is false
+			log "waiting for zoom process"
+			delay wait
+			set visible of process zoom to false
+		end repeat
+	end tell
+	
+	tell application "System Events"
+		tell process zoom
+			repeat until window initialWindow exists
+				log "waiting for create meeting window"
+				delay wait
+			end repeat
+			
+			# Click the start video button
+			click button "Start with video" of group 0 of group 0 of group 0 of window initialWindow
+			
+			# Make sure the correct Zoom window is active
+			repeat until window contains "Zoom Meeting" exists
+				log "waiting for video window"
+				delay wait
+			end repeat
+			
+			# Check the invite button has loaded
+			repeat until button "Invite" of front window exists
+				log "waiting for the record button"
+				delay wait
+			end repeat
+			
+			tell front window
+				click button "Invite"
+			end tell
+			
+			repeat until window contains "Invite people to join meeting" exists
+				log "waiting for invite window"
+				delay wait
+				activate window
+			end repeat
+			
+			# Check the copy url button has loaded
+			repeat until button "Copy URL" of front window exists
+				log "waiting for the copy url button"
+				delay wait
+			end repeat
+			
+			tell front window
+				click button "Copy URL"
+				keystroke "w" using {command down}
+			end tell
+		end tell
+	end tell
+end run
+
+
