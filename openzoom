@@ -1,0 +1,17 @@
+#!/bin/zsh
+# Opens a zoom meeting with the name you've given it.
+# Drop this script in /usr/local/bin/openzoom
+# Invoke with `openzoom meeting_name`
+
+typeset -A meeting
+
+# NOTE: set this hashmap with meeting_name and ids of that meeting
+meeting[remote]=8088084242
+
+if [ -z ${1+x} ]; then
+  echo "pass one argument for the meetings you have available: ${(k)meeting}"
+  exit 1
+fi
+meeting_id=${meeting[$1]}
+
+/usr/bin/open "https://zoom.us/j/$meeting_id"

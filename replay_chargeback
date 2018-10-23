@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+python ~/Repos/pleo/pleo/ops/chargebacks/replay_chargeback.py \
+        --user=Pagobox \
+        --password=(pass pleoprod/GPS_PASSWORD) \
+        --client-id=(pass pleoprod/HYDRA_CLIENT_ID) \
+        --client-secret=(pass pleoprod/HYDRA_CLIENT_SECRET)
