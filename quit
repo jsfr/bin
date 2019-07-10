@@ -1,0 +1,5 @@
+#!/bin/bash
+
+APP=$(osascript -e 'tell application "System Events" to get name of processes' | sed 's/, /,/g' | tr ', ' '\n' | sort | uniq | fzf)
+
+[ -n "${APP}" ] && osascript -e "quit app \"${APP}\""
