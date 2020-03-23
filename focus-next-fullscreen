@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+
+yabai -m space --focus (yabai -m query --spaces | jq -r 'limit(1;.[] | select(."native-fullscreen" == 1)) | .index')
