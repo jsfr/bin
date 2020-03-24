@@ -1,2 +1,0 @@
-#!/usr/bin/env sh
-git branch --color=never | sed "s/^[\* ]//" | fzf | xargs git delete-branch
