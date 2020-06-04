@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+APP_SOURCES=(
+    "/Applications"
+    "$HOME/Applications"
+    "/System/Applications"
+)
+
+PREF_SOURCES=(
+    "/Library/PreferencePanes"
+    "$HOME/Library/PreferencePanes"
+    "/System/Library/PreferencePanes"
+)
+
+APPS=$(fd . -e app --exact-depth 1 "${APP_SOURCES[@]}" | sed 's:.*/\(.*\)\.app:\1:')
+PREF=$(fd . -e prefPane --exact-depth 1 "${PREF_SOURCES[@]}" | sed 's:.*/\(.*\)\.prefPane:\1:')
+
+to_run=$(cat <(echo "$APPS") <(echo "$PREF") | xmenu "$@")
+
+if [[ -z $to_run ]]; then
+    exit
+fi
+
+if grep "$to_run" <<<"$APPS" &>/dev/null; then
+    open -a "$to_run" -n
+else
+    to_run=$(fd "$to_run" -e prefPane --exact-depth 1 "${PREF_SOURCES[@]}")
+    open -b com.apple.systempreferences "$to_run"
+fi
